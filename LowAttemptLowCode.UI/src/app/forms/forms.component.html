@@ -1,0 +1,16 @@
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let item of jsonData" class="form-floating">
+        <input 
+            *ngIf="[
+                'text'].includes(item.type)"
+            [type]="item.type"
+            [id]="item.name"
+            [formControlName]="item.name"
+            class="form-control"
+            [value]="item.value"
+            [placeholder]="item.label">
+        <label for="username" class="form-label">{{item.label}}</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

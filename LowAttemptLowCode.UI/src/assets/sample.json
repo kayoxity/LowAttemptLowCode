@@ -1,0 +1,31 @@
+{
+    "controls": [
+        {
+            "name": "username",
+            "type": "text",
+            "label": "Username",
+            "value": "austin",
+            "validators": [
+                {
+                    "required": true,
+                    "minlength": 3,
+                    "maxlength": 20
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "type": "text",
+            "label": "Email",
+            "value": null,
+            "validators": [
+                {
+                    "type": "email",
+                    "required": true,
+                    "minlength": 3,
+                    "maxlength": 20
+                }
+            ]
+        }
+    ]
+}
