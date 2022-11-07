@@ -1,3 +1,4 @@
+using System.Text.Json;
 using LowAttemptLowCode.API.Business;
 using LowAttemptLowCode.API.Business.Interface;
 using LowAttemptLowCode.API.Data;
@@ -25,8 +26,7 @@ namespace LowAttemptLowCode.API
             builder.Services.AddScoped<IModelBL, ModelBL>();
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
             builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
             {
@@ -47,6 +47,15 @@ namespace LowAttemptLowCode.API
             }
 
             app.UseHttpsRedirection();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            }
+            else
+            {
+                app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("*.pcfreakz.co.in"));
+            }
 
             app.UseAuthorization();
 

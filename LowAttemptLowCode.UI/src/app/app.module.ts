@@ -5,11 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FormsComponent } from './forms/forms.component';
+import { HomeComponent } from './home/home.component';
+import { LeftPanelComponent } from './left-panel/left-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormsComponent
+    FormsComponent,
+    HomeComponent,
+    LeftPanelComponent
   ],
   imports: [
     BrowserModule,

@@ -30,5 +30,12 @@ namespace LowAttemptLowCode.API.Business
 
             return modelData.Id;
         }
+
+        public async Task<ModelSchema> GetModel()
+        {
+            _mongoDBClient.SetDatabaseAndCollection(Constants.LowAttemptLowCode, Constants.Models);
+
+            return await _mongoDBClient.GetAsync();
+        }
     }
 }

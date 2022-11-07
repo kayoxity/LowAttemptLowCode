@@ -10,9 +10,13 @@ namespace LowAttemptLowCode.API.Entities.MongoDBSchemas
     {
         [JsonProperty("_id")]
         public string Id { get; set; } = Guid.NewGuid().ToString();
+        [BsonElement("modelName")]
         public string ModelName { get; set; }
+        [BsonElement("model")]
         public JObject Model { get; set; }
+        [BsonElement("dateCreated")]
         public DateTime DateCreated { get; set; } = DateTime.Now;
+        [BsonElement("dateModified")]
         public DateTime DateModified { get; set; } = DateTime.Now;
     }
 }
