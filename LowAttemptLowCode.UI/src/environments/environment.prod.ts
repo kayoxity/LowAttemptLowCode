@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://api-lowattemptlowcode.pcfreakz.co.in',
-  angularBaseUrl: 'http://www.pcfreakz.co.in'
+  baseUrl: 'https://api-lowattemptlowcode.pcfreakz.co.in',
+  angularBaseUrl: 'https://www.pcfreakz.co.in'
 };
