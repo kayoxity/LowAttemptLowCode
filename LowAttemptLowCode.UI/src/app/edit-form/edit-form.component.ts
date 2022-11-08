@@ -63,8 +63,6 @@ export class EditFormComponent implements OnInit {
     if (index > -1) {
       this.formData.Model.inputs.splice(index, 1);
    }
-
-   console.log(this.formData.Model.inputs);
   }
 
 }

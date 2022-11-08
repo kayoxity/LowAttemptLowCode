@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { FormObjectEntity, GetModelResponse } from '../.Models/Response/GetModelResponse';
 import { AddResponseRequest, ResponseSchema } from '../.Models/Request/AddResponseRequest';
@@ -17,7 +17,7 @@ export class FillFormComponent implements OnInit {
 
   dynamicForm: FormGroup = this.fb.group({});
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.formData = {
@@ -98,6 +98,7 @@ export class FillFormComponent implements OnInit {
 
     this.http.post(url, responseData).subscribe({
       next: (response) => {
+        this.router.navigate(['/']);
       },
       error: (error) => console.log(error)
     });
