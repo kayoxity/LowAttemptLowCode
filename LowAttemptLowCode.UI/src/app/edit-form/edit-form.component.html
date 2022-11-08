@@ -1,0 +1,14 @@
+<div>
+    <div class="row">
+      <div class="col-3">
+        <app-left-panel 
+        [editFormInputData]="editFormInputData"
+        (saveFormInputEventEmitter)="saveFormInput($event)"></app-left-panel>
+      </div>
+      <div class="col-9">
+          <app-forms [formData]="formData"
+          (editFormInputEventEmitter)="editForm($event)"
+          (addFormInputEventEmitter)="addFormInput($event)"></app-forms>
+      </div>
+    </div>
+  </div>

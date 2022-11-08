@@ -1,3 +1,16 @@
 .btn {
     margin: 15px 15px;
 }
+
+.form-floating {
+    --bs-gutter-x: 0;
+}
+
+.input-group-addon {
+    min-width:33%;
+    text-align:left;
+}
+
+.requiredtag {
+    color: red;
+}

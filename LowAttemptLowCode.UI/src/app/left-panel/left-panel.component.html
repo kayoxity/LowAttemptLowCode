@@ -1,4 +1,141 @@
 <div>
-    <button type="button" class="btn btn-success" (click)="addNewComponent()">Add Component</button>
-    <button type="button" class="btn btn-primary" (click)="saveForm()">Save Form</button>
+    <div class="row text-center">
+        <h3>Configure Input</h3>
+        <form [formGroup]="attributesForm" *ngIf="editFormInputData!=null" (ngSubmit)="saveFormInput()">
+            <div class="row align-items-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Type<span class="requiredtag">*</span></span>
+                        <select class="form-select" formControlName="type">
+                            <option *ngFor="let type of lists.typeList" [ngValue]="type">{{type | titlecase}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Name<span class="requiredtag">*</span></span>
+                        <input 
+                            type="text"
+                            id="name"
+                            formControlName="name"
+                            class="form-control form-control-sm"
+                            [value]="editFormInputData.name">
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Label<span class="requiredtag">*</span></span>
+                        <input 
+                            type="text"
+                            id="label"
+                            formControlName="label"
+                            class="form-control form-control-sm"
+                            [value]="editFormInputData.label">
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Placeholder</span>
+                        <input 
+                            type="text"
+                            id="placeholder"
+                            formControlName="placeholder"
+                            class="form-control form-control-sm"
+                            [value]="editFormInputData.placeholder">
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Initial Value</span>
+                        <input 
+                            type="text"
+                            id="initialValue"
+                            formControlName="initialValue"
+                            class="form-control form-control-sm"
+                            [value]="editFormInputData.initialValue">
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center text-center">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text input-group-addon">Size<span class="requiredtag">*</span></span>
+                        <select class="form-select" formControlName="size">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row align-items-center text-center">
+                <div class="col">Validations</div>
+            </div>
+            <div formGroupName="validators">
+                <div class="row align-items-center text-center">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text input-group-addon">Required<span class="requiredtag">*</span></span>
+                            <select class="form-select" formControlName="required">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text input-group-addon">Min Length</span>
+                            <input 
+                                type="text"
+                                id="minlength"
+                                formControlName="minlength"
+                                class="form-control form-control-sm"
+                                [value]="editFormInputData.validators.minlength">
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text input-group-addon">Max Length</span>
+                            <input 
+                                type="text"
+                                id="maxlength"
+                                formControlName="maxlength"
+                                class="form-control form-control-sm"
+                                [value]="editFormInputData.validators.maxlength">
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" *ngIf="attributesForm.valid">Save And View Changes</button>
+        </form>
+    </div>
 </div>

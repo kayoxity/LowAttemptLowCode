@@ -1,28 +1,74 @@
 <div>
-    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-        <div *ngFor="let control of modelData.controls">
-            <div class="row align-items-center">
-                <div class="form-floating col-9">
+    <div class="row">
+        <form name="dynamicForm" [formGroup]="dynamicForm" (ngSubmit)="saveForm()">
+            <div class="row">
+                <div class="form-floating col-2"></div>
+                <div class="form-floating col-3">
                     <input 
-                        *ngIf="[
-                            'text'].includes(control.type)"
-                        [type]="control.type"
-                        [id]="control.name"
-                        [formControlName]="control.name"
+                        type="text"
+                        id="formName"
+                        formControlName="formName"
                         class="form-control"
-                        [value]="control.value"
-                        [placeholder]="control.label">
-                    <label for="username" class="form-label">{{control.label}}</label>
+                        placeholder="Form Name*"
+                        [value]="formData.ModelName"
+                        [ngClass]="{ 'is-invalid': dynamicForm.controls['formName'].invalid && dynamicForm.controls['formName'].touched }">
+                    <label for="formName" class="align-left">Form Name<span class="requiredtag">*</span></label>
                 </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-dark" (click)="editFormInput(control.name)">
-                        <svg id="editIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                            <path fill-rule="evenodd" d="M17.263 2.177a1.75 1.75 0 012.474 0l2.586 2.586a1.75 1.75 0 010 2.474L19.53 10.03l-.012.013L8.69 20.378a1.75 1.75 0 01-.699.409l-5.523 1.68a.75.75 0 01-.935-.935l1.673-5.5a1.75 1.75 0 01.466-.756L14.476 4.963l2.787-2.786zm-2.275 4.371l-10.28 9.813a.25.25 0 00-.067.108l-1.264 4.154 4.177-1.271a.25.25 0 00.1-.059l10.273-9.806-2.94-2.939zM19 8.44l2.263-2.262a.25.25 0 000-.354l-2.586-2.586a.25.25 0 00-.354 0L16.061 5.5 19 8.44z"></path>
-                        </svg>
-                    </button>
+                <div class="form-floating col-2"></div>
+                <div class="form-floating col-3">
+                    <input 
+                        type="text"
+                        id="author"
+                        formControlName="author"
+                        class="form-control"
+                        placeholder="Author*"
+                        [value]="formData.Author"
+                        [ngClass]="{ 'is-invalid': dynamicForm.controls['author'].invalid && dynamicForm.controls['author'].touched }">
+                    <label for="author" class="align-left">Author<span class="requiredtag">*</span></label>
+                </div>
+                <div class="form-floating col-2"></div>
+            </div>
+            <hr>
+            <div *ngFor="let input of formData.Model.inputs;index as i;">
+                <div class="row align-items-center">
+                    <div class="col-1 align-self-start numbering">
+                        {{i+1}}
+                    </div>
+                    <div class="col-10">
+                        <label for="username" class="form-label align-left">{{input.label}}</label>
+                        <input 
+                            *ngIf="[
+                                'text',
+                                'email',
+                                'password'].includes(input.type)"
+                            [type]="input.type"
+                            [id]="input.name"
+                            [formControlName]="input.name"
+                            class="form-control form-control-sm"
+                            [value]="input.initialValue"
+                            [placeholder]="input.placeholder">
+                    </div>
+                    <div class="col-1 align-self-end">
+                        <button type="button" class="btn btn-dark" (click)="editFormInput(input.order)">
+                            <svg id="editIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path fill-rule="evenodd" d="M17.263 2.177a1.75 1.75 0 012.474 0l2.586 2.586a1.75 1.75 0 010 2.474L19.53 10.03l-.012.013L8.69 20.378a1.75 1.75 0 01-.699.409l-5.523 1.68a.75.75 0 01-.935-.935l1.673-5.5a1.75 1.75 0 01.466-.756L14.476 4.963l2.787-2.786zm-2.275 4.371l-10.28 9.813a.25.25 0 00-.067.108l-1.264 4.154 4.177-1.271a.25.25 0 00.1-.059l10.273-9.806-2.94-2.939zM19 8.44l2.263-2.262a.25.25 0 000-.354l-2.586-2.586a.25.25 0 00-.354 0L16.061 5.5 19 8.44z"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+            <div class="row">
+                <div class="col-1">
+                    <button type="button" (click)="addFormInput()" class="btn btn-success addNewInput">+</button>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary" [disabled]="!dynamicForm.valid">Save Form</button>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </form>
+    </div>
 </div>

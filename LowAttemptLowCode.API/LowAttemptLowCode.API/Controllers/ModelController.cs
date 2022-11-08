@@ -30,11 +30,24 @@ namespace LowAttemptLowCode.API.Controllers
             return await _modelBL.AddModel(addModelRequest);
         }
 
-        [HttpGet(RouteConstants.GetModel)]
-        public async Task<ActionResult<APIResponseModel<ModelSchema>>> GetModel()
+        [HttpPost(RouteConstants.UpdateModel)]
+        public async Task<ActionResult<bool>> UpdateModel(UpdateModelRequest updateModelRequest)
         {
-            var modelData = await _modelBL.GetModel();
+            return await _modelBL.UpdateModel(updateModelRequest);
+        }
+
+        [HttpGet(RouteConstants.GetModelById)]
+        public async Task<ActionResult<APIResponseModel<ModelSchema>>> GetModel(string id)
+        {
+            var modelData = await _modelBL.GetModelById(id);
             return new APIResponseModel<ModelSchema>(modelData);
+        }
+
+        [HttpGet(RouteConstants.GetAllModels)]
+        public async Task<ActionResult<APIResponseModel<List<GetAllModelsResponse>>>> GetAllModels()
+        {
+            var modelDatas = await _modelBL.GetAllModels();
+            return new APIResponseModel<List<GetAllModelsResponse>>(modelDatas);
         }
     }
 }

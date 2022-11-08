@@ -36,13 +36,22 @@ namespace LowAttemptLowCode.API.Data
         {
             await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).InsertOneAsync(data);
         }
-
-        public async Task<ModelSchema> GetAsync()
+        public async Task UpdateAsync(BsonDocument data, string id)
         {
-            var documentList = await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).Find(new BsonDocument()).ToListAsync();
-            var document = documentList.FirstOrDefault();
-            ModelSchema modelSchema = Newtonsoft.Json.JsonConvert.DeserializeObject<ModelSchema>(document.ToJson());
-            return modelSchema;
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).ReplaceOneAsync(filter, data);
+        }
+
+        public async Task<BsonDocument> GetByIdAsync(string id)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var documentList = await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).Find(filter).ToListAsync();
+            return documentList.FirstOrDefault();
+        }
+
+        public async Task<List<BsonDocument>> GetAllAsync()
+        {
+            return (await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).FindAsync(new BsonDocument())).ToList();
         }
 
         #region Private Methods

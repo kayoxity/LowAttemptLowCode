@@ -1,0 +1,30 @@
+<div class="container">
+    <form [formGroup]="dynamicForm" (ngSubmit)="submitResponse()">
+        <div *ngFor="let input of formData.Model.inputs;index as i;">
+            <div class="row align-items-center">
+                <div class="col">
+                    <label for="username" class="form-label align-left">{{i+1}}. {{input.label}}</label>
+                    <input 
+                        *ngIf="[
+                            'text',
+                            'email',
+                            'password'].includes(input.type)"
+                        [type]="input.type"
+                        [id]="input.name"
+                        [formControlName]="input.name"
+                        class="form-control form-control-sm"
+                        [value]="input.initialValue"
+                        [ngClass]="{ 'is-invalid': dynamicForm.controls[input.name].invalid && dynamicForm.controls[input.name].touched }"
+                        [placeholder]="input.placeholder">
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-4"></div>
+            <div class="col-4 submitbutton">
+                <button type="submit" class="btn btn-primary" [disabled]="!dynamicForm.valid">Submit</button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </form>
+</div>

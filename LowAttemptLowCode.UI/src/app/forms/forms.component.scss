@@ -6,6 +6,18 @@
     margin: 15px 0;
 }
 
+.numbering {
+    font-size: 50px;
+}
+
+.form-label {
+    font-size: 24px;
+}
+
 .form-floating {
     --bs-gutter-x: 0;
+}
+
+.requiredtag {
+    color: red;
 }

@@ -9,6 +9,7 @@ namespace LowAttemptLowCode.API.Helpers
         public AutoMapperProfile()
         {
             CreateMap<AddModelRequest, ModelSchema>();
+            CreateMap<UpdateModelRequest, ModelSchema>();
         }
     }
 }

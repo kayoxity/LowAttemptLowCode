@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="col-1">
+            SN    
+        </div>
+        <div class="col">
+            Form    
+        </div>
+        <div class="col">
+            Author    
+        </div>
+        <div class="col">
+            Responses    
+        </div>
+        <div class="col">
+            Edit    
+        </div>
+        <div class="col">
+            Copy Form Link    
+        </div>
+    </div>
+    <div *ngFor="let data of getAllModelsResponse.Data;index as i;" class="row text-center">
+        <div class="col-1">
+            {{i+1}}    
+        </div>
+        <div class="col">
+            {{data.ModelName}}    
+        </div>
+        <div class="col">
+            {{data.Author}}    
+        </div>
+        <div class="col">
+            <a [routerLink]="[data.Id,'edit']">{{data.Responses}}</a>   
+        </div>
+        <div class="col">
+            <a [routerLink]="[data.Id,'edit']">Edit</a>    
+        </div>
+        <div class="col">
+            <button class="btn btn-light" (click)="copyMessage(data.Id)">Copy</button>    
+        </div>
+    </div>
+</div>
