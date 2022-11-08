@@ -20,6 +20,7 @@ namespace LowAttemptLowCode.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddCors();
             builder.Services.ConfigureMongoDB(builder);
             builder.Services.ConfigureAutoMapper();
             builder.Services.AddScoped<IMongoDBClient, MongoDBClient>();
@@ -48,14 +49,20 @@ namespace LowAttemptLowCode.API
 
             app.UseHttpsRedirection();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
-            }
-            else
-            {
-                app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("*.pcfreakz.co.in"));
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200/"));
+            //}
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://pcfreakz.co.in"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://pcfreakz.co.in"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.pcfreakz.co.in"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://www.pcfreakz.co.in"));
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://pcfreakz.co.in/"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://pcfreakz.co.in/"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.pcfreakz.co.in/"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://www.pcfreakz.co.in/"));
 
             app.UseAuthorization();
 
