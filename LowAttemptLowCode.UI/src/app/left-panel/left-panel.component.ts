@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputEntity } from '../.Models/FormModel';
 import { Lists } from '../.Models/Lists';
 
@@ -22,9 +22,8 @@ export class LeftPanelComponent implements OnInit,OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.editFormInputData != null) {
-      this.attributesForm.addControl("name", this.fb.control(this.editFormInputData.name));
       this.attributesForm.addControl("type", this.fb.control(this.editFormInputData.type));
-      this.attributesForm.addControl("label", this.fb.control(this.editFormInputData.label));
+      this.attributesForm.addControl("label", this.fb.control(this.editFormInputData.label, Validators.required));
       this.attributesForm.addControl("placeholder", this.fb.control(this.editFormInputData.placeholder));
       this.attributesForm.addControl("initialValue", this.fb.control(this.editFormInputData.initialValue));
       this.attributesForm.addControl("size", this.fb.control(this.editFormInputData.size));
@@ -35,9 +34,8 @@ export class LeftPanelComponent implements OnInit,OnChanges {
       }));
       
 
-      this.attributesForm.setControl("name", this.fb.control(this.editFormInputData.name));
       this.attributesForm.setControl("type", this.fb.control(this.editFormInputData.type));
-      this.attributesForm.setControl("label", this.fb.control(this.editFormInputData.label));
+      this.attributesForm.setControl("label", this.fb.control(this.editFormInputData.label, Validators.required));
       this.attributesForm.setControl("placeholder", this.fb.control(this.editFormInputData.placeholder));
       this.attributesForm.setControl("initialValue", this.fb.control(this.editFormInputData.initialValue));
       this.attributesForm.setControl("size", this.fb.control(this.editFormInputData.size));
@@ -50,12 +48,11 @@ export class LeftPanelComponent implements OnInit,OnChanges {
   }
 
   saveFormInput() {
-    console.log(this.attributesForm);
     if(this.attributesForm.valid){
       let validators = this.attributesForm.value["validators"];
 
       let inputFormData:InputEntity = {
-        name: this.attributesForm.value["name"],
+        name: this.editFormInputData.name,
         type: this.attributesForm.value["type"],
         label: this.attributesForm.value["label"],
         placeholder: this.attributesForm.value["placeholder"],

@@ -25,6 +25,7 @@ namespace LowAttemptLowCode.API
             builder.Services.ConfigureAutoMapper();
             builder.Services.AddScoped<IMongoDBClient, MongoDBClient>();
             builder.Services.AddScoped<IModelBL, ModelBL>();
+            builder.Services.AddScoped<IResponseBL, ResponseBL>();
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();

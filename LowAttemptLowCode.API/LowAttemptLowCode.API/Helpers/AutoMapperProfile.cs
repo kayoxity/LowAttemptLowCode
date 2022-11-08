@@ -10,6 +10,7 @@ namespace LowAttemptLowCode.API.Helpers
         {
             CreateMap<AddModelRequest, ModelSchema>();
             CreateMap<UpdateModelRequest, ModelSchema>();
+            CreateMap<AddResponseRequest, ResponseSchema>();
         }
     }
 }

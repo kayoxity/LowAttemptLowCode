@@ -54,6 +54,20 @@ namespace LowAttemptLowCode.API.Data
             return (await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).FindAsync(new BsonDocument())).ToList();
         }
 
+        public async Task<List<BsonDocument>> GetAllResponsesByModelId(string modelId)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("modelId", modelId);
+            return (await _mongoDatabase.GetCollection<BsonDocument>(_collectionName).FindAsync(filter)).ToList();
+        }
+
+        public async Task IncrementResponseAsync(string modelId)
+        {
+            var model = await GetByIdAsync(modelId);
+            model.Set("responseCount", Int64.Parse(model.GetElement("responseCount").Value.ToString()) + 1);
+
+            await UpdateAsync(model, modelId);
+        }
+
         #region Private Methods
 
         private IMongoDatabase GetDatabase(string databaseName)

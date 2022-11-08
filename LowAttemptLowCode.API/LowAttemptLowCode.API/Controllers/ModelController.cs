@@ -25,9 +25,17 @@ namespace LowAttemptLowCode.API.Controllers
         }
 
         [HttpPost(RouteConstants.AddModel)]
-        public async Task<ActionResult<string>> AddModel(AddModelRequest addModelRequest)
+        public async Task<ActionResult<APIResponseModel<string>>> AddModel(AddModelRequest addModelRequest)
         {
-            return await _modelBL.AddModel(addModelRequest);
+            var addModelResponse = await _modelBL.AddModel(addModelRequest);
+            return new APIResponseModel<string>(addModelResponse);
+        }
+
+        [HttpPost(RouteConstants.AddJsonModel)]
+        public async Task<ActionResult<APIResponseModel<string>>> AddJsonModel(AddJsonModelRequest addJsonModelRequest)
+        {
+            var addJsonModelResponse = await _modelBL.AddJsonModel(addJsonModelRequest);
+            return new APIResponseModel<string>(addJsonModelResponse);
         }
 
         [HttpPost(RouteConstants.UpdateModel)]

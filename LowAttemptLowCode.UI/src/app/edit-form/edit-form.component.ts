@@ -24,7 +24,8 @@ export class EditFormComponent implements OnInit {
       ModelName: "",
       Model: {
         inputs: []
-      }
+      },
+      ResponseCount: 0
     };
 
     if(this.route.snapshot.routeConfig.path.endsWith('edit')) {
@@ -54,6 +55,16 @@ export class EditFormComponent implements OnInit {
     let updateItem = this.formData.Model.inputs.find(x => x.order == formInputData.order);
     let index = this.formData.Model.inputs.indexOf(updateItem);
     this.formData.Model.inputs[index] = formInputData;
+  }
+
+  deleteFormInput(order: number) {
+    let deleteItem = this.formData.Model.inputs.find(x => x.order == order);
+    const index = this.formData.Model.inputs.indexOf(deleteItem, 0);
+    if (index > -1) {
+      this.formData.Model.inputs.splice(index, 1);
+   }
+
+   console.log(this.formData.Model.inputs);
   }
 
 }

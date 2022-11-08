@@ -1,9 +1,24 @@
 <div class="container">
     <form [formGroup]="dynamicForm" (ngSubmit)="submitResponse()">
+        <div class="row">
+            <div class="form-floating col-2"></div>
+            <div class="form-floating col">
+                <input 
+                    type="text"
+                    id="Name"
+                    formControlName="Name"
+                    class="form-control"
+                    placeholder="Fullname*"
+                    [ngClass]="{ 'is-invalid': dynamicForm.controls['Name'].invalid && dynamicForm.controls['Name'].touched }">
+                <label for="Name" class="align-left">Fullname<span class="requiredtag">*</span></label>
+            </div>
+            <div class="form-floating col-2"></div>
+        </div>
+        <hr>
         <div *ngFor="let input of formData.Model.inputs;index as i;">
             <div class="row align-items-center">
                 <div class="col">
-                    <label for="username" class="form-label align-left">{{i+1}}. {{input.label}}</label>
+                    <label for="username" class="form-label align-left">{{i+1}}. {{input.label}}<span *ngIf="input.validators.required == 'true'" class="requiredtag">*</span></label>
                     <input 
                         *ngIf="[
                             'text',

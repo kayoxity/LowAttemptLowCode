@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row text-center headercommon">
+        <div class="col-1 header">
+                
+        </div>
+        <div class="col header">
+            Response By    
+        </div>
+        <div class="col header">
+            Responded On    
+        </div>
+        <div class="col header">
+            View Response    
+        </div>
+    </div>
+    <div *ngFor="let data of response.Data;index as i;" class="row text-center">
+        <div class="col-1">
+            {{i+1}}    
+        </div>
+        <div class="col">
+            {{data.Name}}    
+        </div>
+        <div class="col">
+            {{formatDate(data.DateCreated)}}    
+        </div>
+        <div class="col">
+            <button class="btn btn-light" [routerLink]="[data.Id]"><a>View</a></button>
+        </div>
+    </div>
+</div>

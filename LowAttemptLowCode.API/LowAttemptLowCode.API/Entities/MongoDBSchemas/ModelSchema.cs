@@ -16,9 +16,11 @@ namespace LowAttemptLowCode.API.Entities.MongoDBSchemas
         public JObject Model { get; set; }
         [BsonElement("author")]
         public string Author { get; set; }
+        [BsonElement("responseCount")]
+        public long ResponseCount { get; set; }
         [BsonElement("dateCreated")]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; }
         [BsonElement("dateModified")]
-        public DateTime DateModified { get; set; } = DateTime.Now;
+        public DateTime DateModified { get; set; } = DateTime.UtcNow;
     }
 }

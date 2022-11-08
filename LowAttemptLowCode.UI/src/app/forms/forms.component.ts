@@ -6,7 +6,9 @@ import { environment } from '../../environments/environment';
 import { AddModelRequest } from '../.Models/Request/AddModelRequest';
 import { UpdateModelRequest } from '../.Models/Request/UpdateModelRequest';
 import { FormObjectEntity } from '../.Models/Response/GetModelResponse';
-import { ActivatedRoute } from '@angular/router';
+import { AddModelResponse } from '../.Models/Response/AddModelResponse';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forms',
@@ -17,19 +19,25 @@ import { ActivatedRoute } from '@angular/router';
 export class FormsComponent implements OnInit,OnChanges {
   @Input() formData: FormObjectEntity;
   @Output() editFormInputEventEmitter = new EventEmitter<number>();
+  @Output() deleteFormInputEventEmitter = new EventEmitter<number>();
   @Output() addFormInputEventEmitter = new EventEmitter<{ inputEntity: InputEntity, formName: string, author: string }>();
 
   dynamicForm: FormGroup = this.fb.group({});
   baseUrl = environment.baseUrl;
+  downloadJsonHref: any;
+  file:any;
+  isEditPage:boolean;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private activatedRoute: ActivatedRoute, private route: Router, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     //console.log(this.dynamicForm);
+    this.isEditPage = !this.activatedRoute.snapshot.routeConfig.path.endsWith('edit');
   }
 
   ngOnChanges(): void {
     this.createDynamicForm();
+    this.prepareDownloadFile();
   }
 
   createDynamicForm() {
@@ -42,23 +50,23 @@ export class FormsComponent implements OnInit,OnChanges {
               validators.push(Validators.required);
             break;
           case 'minlength':
-            validators.push(Validators.minLength(value));
+            validators.push(Validators.minLength(+value));
             break;
           case 'maxlength':
-            validators.push(Validators.maxLength(value));
+            validators.push(Validators.maxLength(+value));
             break;
           case 'minBoxesChecked':
-            validators.push(Validators.minLength(value));
+            validators.push(Validators.minLength(+value));
             break;
           case 'maxBoxesChecked':
-            validators.push(Validators.maxLength(value));
+            validators.push(Validators.maxLength(+value));
             break;
         }
       }
-
       this.dynamicForm.addControl(element.name, this.fb.control(element.initialValue, validators));
       this.dynamicForm.setControl(element.name, this.fb.control(element.initialValue, validators));
     }
+
     this.dynamicForm.addControl("formName", this.fb.control(this.formData.ModelName, Validators.required));
     this.dynamicForm.addControl("author", this.fb.control(this.formData.Author, Validators.required));
 
@@ -67,14 +75,17 @@ export class FormsComponent implements OnInit,OnChanges {
   }
 
   saveForm() {
-    if(this.route.snapshot.routeConfig.path.endsWith('edit')) {
+    this.prepareDownloadFile();
+
+    if(this.activatedRoute.snapshot.routeConfig.path.endsWith('edit')) {
       let url = this.baseUrl + '/api/Model/UpdateModel';
 
       let updateModelRequest:UpdateModelRequest = {
-        Id: this.route.snapshot.params['id'],
+        Id: this.activatedRoute.snapshot.params['id'],
         Author: this.dynamicForm.value["author"],
         ModelName: this.dynamicForm.value["formName"],
-        Model: this.formData.Model
+        Model: this.formData.Model,
+        ResponseCount: this.formData.ResponseCount
       }
 
       this.http.post(url, updateModelRequest).subscribe({
@@ -90,14 +101,15 @@ export class FormsComponent implements OnInit,OnChanges {
       let addModelRequest:AddModelRequest = {
         Author: this.dynamicForm.value["author"],
         ModelName: this.dynamicForm.value["formName"],
-        Model: this.formData.Model
+        Model: this.formData.Model,
+        ResponseCount: this.formData.ResponseCount
       }
 
-      this.http.post(url, addModelRequest).subscribe({
+      this.http.post<AddModelResponse>(url, addModelRequest).subscribe({
         next: (response) => {
-          //console.log(response);
+          this.route.navigate(['forms',response.Data,'edit']);
         },
-        error: (error) => console.log(error)
+        error: (error) => console.log("Error ocurred : ", error)
       });
     }
   }
@@ -109,13 +121,13 @@ export class FormsComponent implements OnInit,OnChanges {
   addFormInput() {
     var formInputData:InputEntity = {
       label: "Label",
-      name: "name" + (this.formData.Model.inputs.length+1),
+      name: "name" + crypto.randomUUID(),
       type: "text",
       size: 1,
       placeholder: "",
       order: this.formData.Model.inputs.length,
       validators: { 
-        required: false
+        required: "false"
       }
     };
     let customInputData = {
@@ -128,4 +140,42 @@ export class FormsComponent implements OnInit,OnChanges {
     this.createDynamicForm();
   }
 
+  deleteFormInput(order:number) {
+    this.deleteFormInputEventEmitter.emit(order);
+  }
+
+  prepareDownloadFile() {
+    var theJSON = JSON.stringify(this.formData);
+    let blob = new Blob([theJSON], { type: 'text/json' });
+    let url= window.URL.createObjectURL(blob);
+    let uri:SafeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+    this.downloadJsonHref = uri;
+  }
+
+  fileChanged(e) {
+    this.file = e.target.files[0];
+    let uploadedData;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      uploadedData = fileReader.result;
+      console.log(uploadedData);
+
+      let data = {
+        data: uploadedData
+      };
+
+      let url = this.baseUrl + '/api/Model/AddJsonModel';
+
+      this.http.post<AddModelResponse>(url, data).subscribe({
+        next: (response) => {
+          this.route.navigate(['/forms', response.Data, 'edit']);
+        },
+        error: (error) => console.log("Error ocurred : ", error)
+      });
+
+    }
+
+    fileReader.readAsText(this.file);
+  }
 }

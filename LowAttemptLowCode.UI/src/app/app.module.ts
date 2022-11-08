@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { EditFormComponent } from './edit-form/edit-form.component';
 import { ViewFormsComponent } from './view-forms/view-forms.component';
 import { FillFormComponent } from './fill-form/fill-form.component';
+import { ResponseComponent } from './response/response.component';
+import { FormResponsesComponent } from './form-responses/form-responses.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FillFormComponent } from './fill-form/fill-form.component';
     NavbarComponent,
     EditFormComponent,
     ViewFormsComponent,
-    FillFormComponent
+    FillFormComponent,
+    ResponseComponent,
+    FormResponsesComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@ export interface InputEntity {
   validators: (ValidatorEntity) ;
 }
 export interface ValidatorEntity {
-  required?: boolean;
+  required?: string;
   minlength?: number;
   maxlength?: number;
 }

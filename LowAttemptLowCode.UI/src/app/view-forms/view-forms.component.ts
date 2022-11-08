@@ -43,4 +43,9 @@ export class ViewFormsComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
+
+  goToLink(id:string) {
+    let url = environment.angularBaseUrl + '/forms/' + id + '/fill';
+    window.open(url, "_blank");
+  }
 }

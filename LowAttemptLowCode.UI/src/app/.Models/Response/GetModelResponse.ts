@@ -8,6 +8,7 @@ export interface GetModelResponse {
 export interface FormObjectEntity {
   ModelName: string;
   Author: string;
+  ResponseCount: number,
   Model: FormModel;
 }
 export interface Model {
@@ -24,5 +25,4 @@ export interface ValidatorsEntity {
   required: boolean;
   minlength: number;
   maxlength: number;
-  type?: string | null;
 }

@@ -12,5 +12,7 @@ namespace LowAttemptLowCode.API.Data.Interfaces
         public Task UpdateAsync(BsonDocument data, string id);
         public Task<BsonDocument> GetByIdAsync(string id);
         public Task<List<BsonDocument>> GetAllAsync();
+        public Task<List<BsonDocument>> GetAllResponsesByModelId(string modelId);
+        public Task IncrementResponseAsync(string modelId);
     }
 }
