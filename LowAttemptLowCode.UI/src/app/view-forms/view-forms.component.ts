@@ -36,7 +36,7 @@ export class ViewFormsComponent implements OnInit {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = environment.angularBaseUrl + 'forms/' + val + '/fill';
+    selBox.value = environment.angularBaseUrl + '/forms/' + val + '/fill';
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
