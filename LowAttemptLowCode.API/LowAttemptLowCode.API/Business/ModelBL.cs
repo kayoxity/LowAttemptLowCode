@@ -45,6 +45,7 @@ namespace LowAttemptLowCode.API.Business
 
             ModelSchema modelData = Newtonsoft.Json.JsonConvert.DeserializeObject<ModelSchema>(addJsonModelRequest.Data);
             modelData.Id = Guid.NewGuid().ToString();
+            modelData.ResponseCount = 0;
             modelData.DateCreated = DateTime.UtcNow;
 
             await _mongoDBClient.InsertAsync(BsonDocument.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(modelData, Serializers.camelCaseSerializer)));
