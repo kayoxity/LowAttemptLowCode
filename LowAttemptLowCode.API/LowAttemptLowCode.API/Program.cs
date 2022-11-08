@@ -50,10 +50,13 @@ namespace LowAttemptLowCode.API
             app.UseHttpsRedirection();
 
             //if (app.Environment.IsDevelopment())
+            //    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            //else
             //{
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200/"));
+            //    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.pcfreakz.co.in"));
+            //    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.pcfreakz.co.in/"));
             //}
+
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://pcfreakz.co.in"));
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://pcfreakz.co.in"));
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://www.pcfreakz.co.in"));
