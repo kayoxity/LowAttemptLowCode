@@ -25,6 +25,12 @@
                     class="form-control form-control-sm"
                     [value]="response.Value"
                     disabled>
+                <textarea 
+                    *ngIf="[
+                        'textarea'].includes(response.Type)"
+                    class="form-control form-control-sm"
+                    [value]="response.Value"
+                    disabled></textarea>
             </div>
         </div>
     </div>

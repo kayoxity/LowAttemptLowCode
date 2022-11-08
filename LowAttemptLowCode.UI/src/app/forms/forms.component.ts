@@ -63,6 +63,10 @@ export class FormsComponent implements OnInit,OnChanges {
             break;
         }
       }
+      if(element.type == "email") {
+        validators.push(Validators.email);
+      }
+
       this.dynamicForm.addControl(element.name, this.fb.control(element.initialValue, validators));
       this.dynamicForm.setControl(element.name, this.fb.control(element.initialValue, validators));
     }
