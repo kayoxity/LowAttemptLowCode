@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://api-lowattemptlowcode.pcfreakz.co.in',
-  angularBaseUrl: 'https://www.pcfreakz.co.in'
+  baseUrl: 'https://lowattemptlowcodeapi.azurewebsites.net',
+  angularBaseUrl: 'https://pcfreakz.azurewebsites.net/'
 };
